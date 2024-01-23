@@ -8,8 +8,6 @@ function App() {
   const [data, setData] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState('all');
 
-  const details = ['fname', 'lname', 'gender', 'tribe_affiliation', 'expertise', 'phone', 'email', 'website']
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -58,7 +56,7 @@ function App() {
 
           {e.website && <dt>Website: </dt>}
           {e.website && e.website.split(', ').map((f) => (
-            <dd><a href={f} target='_blank'>{f}</a></dd>))}
+            <dd><a href={f} target='_blank' rel="noreferrer">{f}</a></dd>))}
         </dl>
       ))}
       </div>
