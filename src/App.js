@@ -18,10 +18,6 @@ function App() {
     return 0;
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const fetchData = async () => {
     const response = await fetch('/data.csv');
     const responseText = await response.text();
@@ -31,6 +27,10 @@ function App() {
     });
     setData(file.data.sort(compare));
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleFilterData = () => {
     const filteredData = data.filter(e =>
