@@ -8,10 +8,6 @@ function App() {
   const [data, setData] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState('all');
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   function compare( a, b ) {
     if ( a.lname < b.lname ){
       return -1;
@@ -21,6 +17,10 @@ function App() {
     }
     return 0;
   }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     const response = await fetch('/data.csv');
