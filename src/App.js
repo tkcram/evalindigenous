@@ -12,6 +12,16 @@ function App() {
     fetchData();
   }, []);
 
+  function compare( a, b ) {
+    if ( a.lname < b.lname ){
+      return -1;
+    }
+    if ( a.lname > b.lname ){
+      return 1;
+    }
+    return 0;
+  }
+
   const fetchData = async () => {
     const response = await fetch('/data.csv');
     const responseText = await response.text();
@@ -19,7 +29,7 @@ function App() {
     var file = Papa.parse(responseText, {
       header: true
     });
-    setData(file.data);
+    setData(file.data.sort(compare));
   };
 
   const handleFilterData = () => {
@@ -30,34 +40,34 @@ function App() {
     return (
       <div>
       {filteredData.map((e, index) => (
-        <dl>
-          <dt>Name: </dt>
-          <dd>{e.lname}, {e.fname}</dd>
+        <section>
+          <h3>{e.lname}, {e.fname}</h3>
+          <dl>
+            <dt>Location: </dt>
+            <dd>{e.city}, {e.country}</dd>
 
-          <dt>Location: </dt>
-          <dd>{e.city}, {e.country}</dd>
+            <dt>Gender: </dt>
+            <dd>{e.sex}</dd>
 
-          <dt>Gender: </dt>
-          <dd>{e.sex}</dd>
+            {e.tribe_affiliation && <dt>Tribal Affiliation: </dt>}
+            {e.tribe_affiliation && <dd>{e.tribe_affiliation}</dd>}
 
-          {e.tribe_affiliation && <dt>Tribal Affiliation: </dt>}
-          <dd>{e.tribe_affiliation}</dd>
+            <dt>Area of Expertise: </dt>
+            <dd>{e.expertise}</dd>
 
-          <dt>Area of Expertise: </dt>
-          <dd>{e.expertise}</dd>
+            {e.phone && <dt>Phone: </dt>}
+            {e.phone && e.phone.split(', ').map((f) => (
+              <dd><a href={`tel:${f}`}>{f}</a></dd>))}
 
-          {e.phone && <dt>Phone: </dt>}
-          {e.phone && e.phone.split(', ').map((f) => (
-            <dd><a href={`tel:${f}`}>{f}</a></dd>))}
+            {e.email && <dt>Email: </dt>}
+            {e.email && e.email.split(', ').map((f) => (
+              <dd><a href={`mailto:${f}`}>{f}</a></dd>))}
 
-          {e.email && <dt>Email: </dt>}
-          {e.email && e.email.split(', ').map((f) => (
-            <dd><a href={`mailto:${f}`}>{f}</a></dd>))}
-
-          {e.website && <dt>Website: </dt>}
-          {e.website && e.website.split(', ').map((f) => (
-            <dd><a href={f} target='_blank' rel="noreferrer">{f}</a></dd>))}
-        </dl>
+            {e.website && <dt>Website: </dt>}
+            {e.website && e.website.split(', ').map((f) => (
+              <dd><a href={f} target='_blank' rel="noreferrer">{f}</a></dd>))}
+          </dl>
+        </section>
       ))}
       </div>
     )
@@ -70,13 +80,15 @@ function App() {
   return (
     <div className="App">
       <main>
-        <label htmlFor='Country'>Country:</label>
-        <select name='Country' id='Country' onChange={handleCountryChange} value={selectedCountry}>
-          <option value='all'>All</option>
-          {countryList.map( e => 
-            <option value = {e}>{e}</option>
-          )}
-        </select>
+        <div>
+          <label htmlFor='Country'>Country:</label>
+          <select name='Country' id='Country' onChange={handleCountryChange} value={selectedCountry}>
+            <option value='all'>All</option>
+            {countryList.map( e => 
+              <option value = {e}>{e}</option>
+            )}
+          </select>
+        </div>
 
         {data && handleFilterData()}
       </main>

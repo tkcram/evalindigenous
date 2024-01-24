@@ -15,6 +15,12 @@ main {
   width: 80%; 
   justify-content: flex-start;
   align-items: flex-start;
+  font-family: 'Raleway';
+}
+
+label{
+  font-weight: bold;
+  padding-left: 5px;
 }
 
 select {
@@ -22,37 +28,30 @@ select {
   font-size: 16px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  margin-bottom: 10px;
-  align-self: flex-start;
-  margin-right: auto;
+  margin: 0 auto 10px 10px;
+}
+
+section {
+  padding: 16px 20px;
+  background-color: #fff;
+  margin-bottom: 16px;
+  box-shadow: 1px 1px 1px grey;
 }
 
 dl {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-dl:nth-child(even) {
-  background-color: #f9f9f9;
+  margin: 0;
 }
 
 dt, dd {
-  flex: 1;
-  padding: 10px;
+  padding: 4px;
 }
 
 dt {
   font-weight: bold;
-  flex-basis: 30%; 
-}
-
-dd {
-  flex-basis: 70%; 
 }
 
 a {
-  color: #3498db; 
+  color: #1F7AB7; 
   text-decoration: none;
 }
 
