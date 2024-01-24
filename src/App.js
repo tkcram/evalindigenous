@@ -8,6 +8,21 @@ function App() {
   const [data, setData] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState('all');
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('/data.csv');
+      const responseText = await response.text();
+
+      var file = Papa.parse(responseText, {
+        header: true
+      });
+      setData(file.data.sort(compare));
+    };
+
+    fetchData();
+  }, []);
+
   function compare( a, b ) {
     if ( a.lname < b.lname ){
       return -1;
@@ -18,19 +33,7 @@ function App() {
     return 0;
   }
 
-  const fetchData = async () => {
-    const response = await fetch('/data.csv');
-    const responseText = await response.text();
 
-    var file = Papa.parse(responseText, {
-      header: true
-    });
-    setData(file.data.sort(compare));
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const handleFilterData = () => {
     const filteredData = data.filter(e =>
