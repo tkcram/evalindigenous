@@ -47,16 +47,16 @@ function App() {
           <h3>{e.lname}, {e.fname}</h3>
           <dl>
             <dt>Location: </dt>
-            <dd>{e.city}, {e.country}</dd>
+            <dd>{e.city && `${e.city}, `}{e.country}</dd>
 
-            <dt>Gender: </dt>
-            <dd>{e.sex}</dd>
+            {e.sex && <dt>Gender: </dt>}
+            {e.sex && <dd>{e.sex}</dd>}
 
             {e.tribe_affiliation && <dt>Tribal Affiliation: </dt>}
             {e.tribe_affiliation && <dd>{e.tribe_affiliation}</dd>}
 
-            <dt>Area of Expertise: </dt>
-            <dd>{e.expertise}</dd>
+            {e.expertise && <dt>Area of Expertise: </dt>}
+            {e.expertise && <dd>{e.expertise}</dd>}
 
             {e.phone && <dt>Phone: </dt>}
             {e.phone && e.phone.split(', ').map((f) => (
