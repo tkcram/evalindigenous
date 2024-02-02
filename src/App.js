@@ -6,7 +6,7 @@ import { countryList } from './countrylist'
 function App() {
 
   const [data, setData] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState('all');
+  const [selectedCountry, setSelectedCountry] = useState('New Zealand');
 
 
   useEffect(() => {
