@@ -17,23 +17,11 @@ function App() {
       var file = Papa.parse(responseText, {
         header: true
       });
-      setData(file.data.sort(compare));
+      setData(file.data);
     };
 
     fetchData();
   }, []);
-
-  function compare( a, b ) {
-    if ( a.lname < b.lname ){
-      return -1;
-    }
-    if ( a.lname > b.lname ){
-      return 1;
-    }
-    return 0;
-  }
-
-
 
   const handleFilterData = () => {
     const filteredData = data.filter(e =>
