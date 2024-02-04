@@ -1,7 +1,6 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import * as Papa from 'papaparse';
-import { countryList } from './countrylist'
 
 function App() {
 
@@ -31,7 +30,7 @@ function App() {
     return (
       <div>
       {filteredData.map((e, index) => (
-        <section>
+        <section key={`${e.fname} ${e.lname}`}>
           <h3>{e.lname}, {e.fname}</h3>
           <dl>
             <dt>Location: </dt>
@@ -48,15 +47,15 @@ function App() {
 
             {e.phone && <dt>Phone: </dt>}
             {e.phone && e.phone.split(', ').map((f) => (
-              <dd><a href={`tel:${f}`}>{f}</a></dd>))}
+              <dd key={f}><a href={`tel:${f}`}>{f}</a></dd>))}
 
             {e.email && <dt>Email: </dt>}
             {e.email && e.email.split(', ').map((f) => (
-              <dd><a href={`mailto:${f}`}>{f}</a></dd>))}
+              <dd key={f}><a href={`mailto:${f}`}>{f}</a></dd>))}
 
             {e.website && <dt>Website: </dt>}
             {e.website && e.website.split(', ').map((f) => (
-              <dd><a href={f} target='_blank' rel="noreferrer">{f}</a></dd>))}
+              <dd key={f}><a href={f} target='_blank' rel="noreferrer">{f}</a></dd>))}
           </dl>
         </section>
       ))}
@@ -68,15 +67,18 @@ function App() {
     setSelectedCountry(event.target.value);
   };
 
+  const countryListSet = new Set()
+  data?.map(e => countryListSet.add(e.country))
+
   return (
     <div className="App">
       <main>
         <div>
           <label htmlFor='Country'>Country:</label>
           <select name='Country' id='Country' onChange={handleCountryChange} value={selectedCountry}>
-            <option value='all'>All</option>
-            {countryList.map( e => 
-              <option value = {e}>{e}</option>
+            <option key="all" value='all'>All</option>
+            {[...countryListSet].sort().map( country => 
+              <option key={country} value={country}>{country}</option>
             )}
           </select>
         </div>
